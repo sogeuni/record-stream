@@ -39,6 +39,7 @@ def record_stream(url, duration, program_name):
 
     command = [
         "ffmpeg",
+        "-loglevel", "debug", # Enable debug logs
         "-i", url,            # Input URL
         "-t", str(duration),  # Duration
         "-vn",                # No video (Audio only)
