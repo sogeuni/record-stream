@@ -32,10 +32,16 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Setup FFmpeg
-        uses: FedericoCarboni/setup-ffmpeg@v3
+      - name: Cache Apt Packages
+        uses: actions/cache@v4
         with:
-          ffmpeg-version: release
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-apt-ffmpeg
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
 
       - name: Create Config
         # Create config.json dynamically setting base_url for GitHub Pages
