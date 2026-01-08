@@ -9,11 +9,11 @@
     <itunes:image href="https://sogeuni.github.io/record-stream/image.jpg"/>
 
     <item>
-      <title>fm_20260108_084351.m4a</title>
-      <description>Recorded on 2026-01-08 08:43</description>
-      <pubDate>Thu, 08 Jan 2026 08:43:55 +0900</pubDate>
-      <enclosure url="https://sogeuni.github.io/record-stream/fm/fm_20260108_084351.m4a" length="63261" type="audio/mp4"/>
-      <guid isPermaLink="false">fm_20260108_084351.m4a</guid>
+      <title>fm_20260108_091246.m4a</title>
+      <description>Recorded on 2026-01-08 09:12</description>
+      <pubDate>Thu, 08 Jan 2026 09:12:50 +0900</pubDate>
+      <enclosure url="https://sogeuni.github.io/record-stream/fm/fm_20260108_091246.m4a" length="63591" type="audio/mp4"/>
+      <guid isPermaLink="false">fm_20260108_091246.m4a</guid>
     </item>
   </channel>
 </rss>
