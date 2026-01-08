@@ -1,0 +1,82 @@
+name: Manual Recording
+
+on:
+  workflow_dispatch:
+    inputs:
+      program_name:
+        description: "Program Name (e.g. ebs-fm)"
+        required: true
+        default: "ebs-fm"
+      stream_url:
+        description: "Stream URL"
+        required: true
+        default: "http://ebsonair.ebs.co.kr/fmradiofamilypc/familypc1m/playlist.m3u8"
+      duration:
+        description: "Duration (seconds)"
+        required: true
+        default: "60"
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository (main branch)
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Create Config
+        # Create config.json dynamically setting base_url for GitHub Pages
+        run: |
+          echo '{
+            "base_url": "https://sogeuni.github.io/record-stream"
+          }' > config.json
+
+      - name: Run Recorder
+        run: |
+          python3 src/recorder.py "${{ inputs.stream_url }}" ${{ inputs.duration }} "${{ inputs.program_name }}"
+
+      - name: Checkout publish branch
+        uses: actions/checkout@v4
+        with:
+          ref: publish
+          path: publish_branch
+          fetch-depth: 0
+
+      - name: Deploy to publish branch
+        run: |
+          # 1. Define Variables
+          PROGRAM_NAME="${{ inputs.program_name }}"
+          # Replace spaces with hyphens for folder name
+          SAFE_PROGRAM_NAME="${PROGRAM_NAME// /-}"
+
+          echo "Processing for: $SAFE_PROGRAM_NAME"
+
+          # 2. Prepare Directory in publish branch
+          mkdir -p publish_branch/$SAFE_PROGRAM_NAME
+
+          # 3. Copy new files (m4a and feed.xml)
+          # Note: recorder.py saves to .recordings/safe-name/
+          cp .recordings/$SAFE_PROGRAM_NAME/*.m4a publish_branch/$SAFE_PROGRAM_NAME/
+          cp .recordings/$SAFE_PROGRAM_NAME/feed.xml publish_branch/$SAFE_PROGRAM_NAME/
+
+          # 4. Commit and Push
+          cd publish_branch
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add .
+          git commit -m "Add recording: $SAFE_PROGRAM_NAME ($(date +'%Y-%m-%d %H:%M'))"
+          git push origin publish

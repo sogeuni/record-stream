@@ -1,0 +1,10 @@
+# Ignore recording data
+.recordings/
+.env
+
+# Ignore python cache
+__pycache__/
+*.pyc
+
+# Ignore config (if specific to environment)
+# config.json
