@@ -44,8 +44,9 @@ jobs:
         run: |
           mkdir -p ffmpeg
           wget -q https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
-          tar -xf ffmpeg-release-amd64-static.tar.xz --strip-components=1 -C ffmpeg ffmpeg-*-amd64-static/ffmpeg
-          rm ffmpeg-release-amd64-static.tar.xz
+          tar -xf ffmpeg-release-amd64-static.tar.xz
+          mv ffmpeg-*-amd64-static/ffmpeg ffmpeg/
+          rm -rf ffmpeg-*-amd64-static*
 
       - name: Add FFmpeg to PATH
         run: echo "$(pwd)/ffmpeg" >> $GITHUB_PATH
