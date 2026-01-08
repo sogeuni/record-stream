@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>fm</title>
+    <description>Podcast feed for fm</description>
+    <link>https://sogeuni.github.io/record-stream</link>
+    <language>ko-kr</language>
+    <itunes:author>Record Stream</itunes:author>
+    <itunes:image href="https://sogeuni.github.io/record-stream/image.jpg"/>
+
+    <item>
+      <title>fm_20260108_081322.m4a</title>
+      <description>Recorded on 2026-01-08 08:14</description>
+      <pubDate>Thu, 08 Jan 2026 08:14:06 +0900</pubDate>
+      <enclosure url="https://sogeuni.github.io/record-stream/fm/fm_20260108_081322.m4a" length="379565" type="audio/mp4"/>
+      <guid isPermaLink="false">fm_20260108_081322.m4a</guid>
+    </item>
+  </channel>
+</rss>
