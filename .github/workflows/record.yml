@@ -1,12 +1,12 @@
-name: Manual Recording
+name: Recording
 
 on:
   workflow_dispatch:
     inputs:
       program_name:
-        description: "Program Name (e.g. ebs-fm)"
+        description: "Program Name (e.g. fm)"
         required: true
-        default: "ebs-fm"
+        default: "fm"
       stream_url:
         description: "Stream URL"
         required: true
