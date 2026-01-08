@@ -14,7 +14,7 @@ on:
       duration:
         description: "Duration (seconds)"
         required: true
-        default: "60"
+        default: "10"
 
 jobs:
   record:
@@ -32,10 +32,23 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install Dependencies
+      - name: Cache FFmpeg
+        id: cache-ffmpeg
+        uses: actions/cache@v4
+        with:
+          path: ./ffmpeg
+          key: ${{ runner.os }}-ffmpeg-static
+
+      - name: Install FFmpeg
+        if: steps.cache-ffmpeg.outputs.cache-hit != 'true'
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          mkdir -p ffmpeg
+          wget -q https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
+          tar -xf ffmpeg-release-amd64-static.tar.xz --strip-components=1 -C ffmpeg ffmpeg-*-amd64-static/ffmpeg
+          rm ffmpeg-release-amd64-static.tar.xz
+
+      - name: Add FFmpeg to PATH
+        run: echo "$(pwd)/ffmpeg" >> $GITHUB_PATH
 
       - name: Create Config
         # Create config.json dynamically setting base_url for GitHub Pages
